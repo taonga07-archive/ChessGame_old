@@ -1,43 +1,50 @@
 import tkinter, Rules, File, os
 from tkinter import messagebox
 
-board = None
-window = None
+# sets the value of our global varibles#
+board = None                           #
+window = None                          #
+########################################
 
 def set_up_window():
-    global window
-    window = tkinter.Tk()
-    window.title('chess')
-    window.tk.call('wm', 'iconphoto', window._w, tkinter.PhotoImage(file = Rules.path +'icon.gif'))
-    start(window)
-    menu(window)
-    window.mainloop()
+    global window # makes vaible window global so we can use it anywhere
+    window = tkinter.Tk() # creates a tkinter window
+    window.title('chess') # gives the window a title 
+    window.tk.call('wm', 'iconphoto', window._w, tkinter.PhotoImage(file = Rules.path +'icon.gif')) # gives the window an image icon
+    # calls starting functions #
+    start(window)              #
+    menu(window)               #
+    ############################
+    window.mainloop() # end of code
 
-def start(window):
-    photo = tkinter.PhotoImage(file = Rules.path + "Intro.gif")
-    w = tkinter.Label(window, image = photo)
-    w.image = photo
-    w.pack()
+def start(window): # this function creates the starting page
+    photo = tkinter.PhotoImage(file = Rules.path + "Intro.gif") # sets 'intro.gif' as the background image we are to put on the window
+    ########## places image on window ##########
+    w = tkinter.Label(window, image = photo)   #
+    w.image = photo                            #
+    w.pack()                                   #
+    ############################################
 
-def play_chess(window):
-    global board
-    destroy_all_widgets(window)
-    menu(window)
-    board = reset_board()
-    layout_board(window, board)
+def play_chess(window): # the function that calls other functions to run our game
+    global board # makes vaible board global so we can use it anywhere
+    # calls chess_game functions #
+    destroy_all_widgets(window)  #
+    menu(window)                 #
+    board = reset_board()        # gets the list of the board to layout_board
+    layout_board(window, board)  #
+    ##############################
 
-def menu(window):
-#    board = reset_board()
-
-    menubar = tkinter.Menu(window)
-
+def menu(window): # this function hold the menubar on starting screen
+    
+    menubar = tkinter.Menu(window) # creates menubar
+ 
     filemenu = tkinter.Menu(menubar, tearoff = 0)
     editmenu = tkinter.Menu(menubar, tearoff = 0)
-    viewmenu = tkinter.Menu(menubar, tearoff= 0 )
+    viewmenu = tkinter.Menu(menubar, tearoff = 0 )
     toolmenu = tkinter.Menu(menubar, tearoff = 0)
     helpmenu = tkinter.Menu(menubar, tearoff = 0)
 
-    filemenu.add_command(label="New", command = lambda: play_chess(window))
+    filemenu.add_command(label="New", command = lambda: play_chess(window)) #starts chess game
     filemenu.add_command(label="Open", command = lambda: File.onOpen(window, board))
     filemenu.add_command(label="Save", command = lambda: File.onSave(board))
     filemenu.add_separator()
@@ -67,29 +74,27 @@ def menu(window):
     menubar.add_cascade(label="Help", menu = helpmenu)
     
     window.config(menu = menubar)
-    #img1 = tkinter.PhotoImage(Rules.path+'icon.png')
-    #b = tkinter.Button(menubar, image=img1, width=6)
-    #b.image = img1
-    #b.pack(side=tkinter.RIGHT)
+    ##img1 = tkinter.PhotoImage(Rules.path+'icon.png')
+    ##b = tkinter.Button(menubar, image=img1, width=6)
+    ##b.image = img1
+    ##b.pack(side=tkinter.RIGHT)
 
-def destroy_all_widgets(window):
+def destroy_all_widgets(window): # closes everything on start screen but menubar
     for widget in window.winfo_children():
         if widget.winfo_class() != 'menubar':
             widget.destroy()
 
-def mssg_bar(window, mssg):
-    messageLabel = tkinter.Label(window, text = mssg)
-    messageLabel.grid(row=9, column=3 , columnspan = 5, sticky = tkinter.N+tkinter.S+tkinter.W+tkinter.E)
+def mssg_bar(window, mssg): # this function shows information about the game at the botum of the screen  
+    messageLabel = tkinter.Label(window, text = mssg) # creates mssg_bar
+    messageLabel.grid(row=9, column=3 , columnspan = 5, sticky = tkinter.N+tkinter.S+tkinter.W+tkinter.E) # places mssg bar on screen as part of the grid
 
 
-def reset_board():
-    board = []
+def reset_board(): # resets the game to the begining
+    board = [] # creates a list of where we will later
     for row in range(0,8):
         rowlist = []
         for column in range(0,8):
-            #if row == 7:
-            #for i in range(Rules.white_pieces):
-            # rowlist.append(Rules.(i)(i, white_pieces[column], path+icons[column], 'white', column, row))
+            ##for board_list in range(8, 0) #for balck (0, 8) for white
             if row == 6:
                 rowlist.append(Rules.Pawn('Pawn', Rules.path+'White_Pawn.gif', 'white', column, row))
             elif row == 1:
