@@ -1,36 +1,52 @@
-from chess_pieces import PIECE_BISHOP, PIECE_KING, PIECE_KNIGHT, PIECE_PAWN, PIECE_QUEEN, PIECE_ROOK
-from chess_pieces import Piece, Pawn, Rook, Knight, Bishop, Queen, King, COLOUR_WHITE, COLOUR_BLACK
+from ast import Constant
+from tkinter import constants
+from chess_pieces import Pawn, Rook, Knight, Bishop, Queen, King
 from json import loads as json_loads
-from chess_api import ChessAPI
 from requests import get
 from math import floor
 
-URL = "https://raw.githubusercontent.com/Taonga07/ChessGame/master/resources/"
+URL: str = "https://raw.githubusercontent.com/Taonga07/ChessGame/master/resources/"
 
-class HeadlessChess(ChessAPI):
-    def __init__(self, file=get(URL+"board.json").content) -> None:
-        super().__init__()
-        self.board, self.turn = self.read_game_data(file)
-
+class ChessHeadless():
+    def __init__(self) -> None:
+        self.board: list[list[object]*8]*8 = [[None]*8]*8
+        self.selcected_square: tuple[int]*2 = None
+        self.selcted_piece: object = None
+        self.colours = ["White", "Black"]
+        self.errs = [
+            ["ErrNone", "No Error Has Occured"],
+            ["ErrInvMove", "This is not a valid move"],
+            ["ErrInvColour", "No Such Colour Exists"],
+            ["ErrInvPiece", "No Such Piece Exists"],
+            ["ErrInvSelPiece", "This Is Not Your Piece"],
+            ["ErrNoSelPiece", "No Piece Selected"],
+            ["ErrInvErr", "Error Does Not Exist"]
+        ]
+    
+    def raise_exception(self, exception_key) -> None:
+        "Raise an exception in self.errs from the key given"
+        err = self.errs[exception_key] if exception_key in self.errs else self.errs[0]
+        return type(err[0], (Exception,), {"__module__": Exception.__module__, "code": exception_key})(err[0])
+    
     def read_game_data(self, file):
         board = [[None] * 8 for row in range(8)]
         board_data = json_loads(file)
         turn = board_data["turn"]
-        for id, piece in enumerate(board_data["pieces"]):
+        for piece in board_data["pieces"]:
             piece_colour, piece_type, piece_pos = piece
             row, column = piece_pos
-            if piece_type == PIECE_PAWN:
-                board[row][column] = Pawn(piece_colour, piece_pos, id)
-            elif piece_type == PIECE_ROOK:
-                board[row][column] = Rook(piece_colour, piece_pos, id)
-            elif piece_type == PIECE_KNIGHT:
-                board[row][column] = Knight(piece_colour, piece_pos, id)
-            elif piece_type == PIECE_BISHOP:
-                board[row][column] = Bishop(piece_colour, piece_pos, id)
-            elif piece_type == PIECE_QUEEN:
-                board[row][column] = Queen(piece_colour, piece_pos, id)
-            elif piece_type == PIECE_KING:
-                board[row][column] = King(piece_colour, piece_pos, id)
+            if piece_type == self.piece_types.index("Pawn"):
+                board[row][column] = Pawn(piece_colour, piece_pos)
+            elif piece_type == self.piece_types.index("Rook"):
+                board[row][column] = Rook(piece_colour, piece_pos)
+            elif piece_type == self.piece_types.index("Knight"):
+                board[row][column] = Knight(piece_colour, piece_pos)
+            elif piece_type == self.piece_types.index("Bishop"):
+                board[row][column] = Bishop(piece_colour, piece_pos)
+            elif piece_type == self.piece_types.index("Queen"):
+                board[row][column] = Queen(piece_colour, piece_pos)
+            elif piece_type == self.piece_types.index("King"):
+                board[row][column] = King(piece_colour, piece_pos)
             else:
                 raise Exception("Invalid Piece Type")
         for row in board:
@@ -133,28 +149,19 @@ class HeadlessChess(ChessAPI):
 
     def get_pieces(self) -> dict:
         "Returns a dictionary of all the pieces on the board"
-        pieces = {}
+        pieces = []
         for square in [y for x in self.board for y in x]:
             if square is not None:
-                pieces[square.id] = {
-                    "piece": square.piece,
-                    "colour": square.colour,
-                    "pos": [square.column, square.row]
-                }
+                pieces.append([
+                    square.piece,
+                    square.colour,
+                    [square.column, square.row]
+                ])
         return pieces
     
-    def get_piece(self, piece_id) -> Piece:
-        "Returns a piece from the board"
-        for square in [y for x in self.board for y in x]:
-            if square is not None:
-                if square.id == piece_id:
-                    return square
-        return None
-    
-    def highlight_moves(self, piece_id) -> dict:
+    def highlight_moves(self, piece) -> dict:
         "returns dictionary of possible moves for a piece"
         highlighted_squares = {}
-        piece = self.get_piece(piece_id)
         piece.set_possible_moves(self.board)
         highlighted_squares[self.index_2d([piece.row, piece.column])] = (0,0,125)
         for move in piece.possible_moves:

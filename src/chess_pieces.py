@@ -2,11 +2,15 @@ PIECE_KNIGHT, PIECE_ROOK, PIECE_PAWN = range(3,6)
 PIECE_KING, PIECE_QUEEN, PIECE_BISHOP = range(3)
 COLOUR_WHITE, COLOUR_BLACK = range(2)
 
-class Piece:
-    "contains defult attrabutes and functions that every piece has"
-    def __init__(self, piece, colour, pos, value, icons, id):
-        self.piece, self.colour, self.id = piece, colour, id
-        self.img_pos = [self.colour, self.piece]
+class ChessPiece(object):
+    def __new__(cls: object, piece_type: int) -> object:
+        piece: object = cls.__subclasses__()[piece_type]
+        return super(ChessPiece, piece).__new__(piece)
+
+    def __init__(self, piece:int, colour:bool, pos:tuple[int, int], value:int) -> None:
+        self.piece_type:int = piece
+        self.colour:int = colour
+        self.img_pos:tuple= [self.colour, self.piece_type]
         self.icon = icons[self.colour]
         self.row, self.column = pos
         self.possible_moves = []
@@ -16,7 +20,7 @@ class Piece:
         local_moves = []
         for row in range(8):
             for column in range(8):
-                if self.piece == "king":
+                if self.piece_type == "king":
                     for move in self.possible_moves:
                         # if it is not my own piece
                         if (board[row][column] is not None) and (
@@ -86,7 +90,7 @@ class Piece:
     def find_moves(self, board, path_to_king):
         self.set_possible_moves(board)
         if len(path_to_king) > 0:  # if we are in check
-            if self.piece == "King":  # king can move out of check
+            if self.piece_type == "King":  # king can move out of check
 
                 self.possible_moves = [
                     move for move in self.possible_moves if move not in path_to_king
@@ -97,7 +101,7 @@ class Piece:
         self.remove_check_moves(board)
 
     def find_path_to_king(self, king_row, king_column):
-        if self.piece != "Knight":  # attcking knight can only be taken
+        if self.piece_type != "Knight":  # attcking knight can only be taken
             if king_column - self.column != 0:
                 column_dir = int(
                     (king_column - self.column) / (abs(king_column - self.column))
@@ -114,9 +118,9 @@ class Piece:
         return [(self.row, self.column)]
 
     def path_past_self(self, board):  # pylint: disable=R1710
-        if (self.piece != "Knight") and (self.piece != "Pawn"):
+        if (self.piece_type != "Knight") and (self.piece_type != "Pawn"):
             return self.find_possible_moves(board, pieces_to_jump=1)
-        elif self.piece == "Pawn":
+        elif self.piece_type == "Pawn":
             if self.column < 7:
                 return [
                     ((self.row + self.direction), (self.column + 1))
@@ -141,10 +145,9 @@ class Piece:
             f"{self.icon}, value={self.value},  possible_move[{len(self.possible_moves)}] = " + \
             f"{self.possible_moves}"
 
-class Pawn(Piece):
-    "subclass of Piece with pawn specific attributes"
-    def __init__(self, colour, pos, id):
-        super().__init__(PIECE_PAWN, colour, pos, 1, ["♙", "♟"], id)
+class Pawn(ChessPiece):
+    def __init__(self, colour, pos):
+        super(ChessPiece, self).__init__(PIECE_PAWN, colour, pos, 1, ["♙", "♟"])
         self.direction = 1 if self.colour == COLOUR_WHITE else -1
         self.first_move = self.check_first_move()
 
@@ -186,10 +189,10 @@ class Pawn(Piece):
                 )
 
 
-class Rook(Piece):
+class Rook(ChessPiece):
     "subclass of Piece with a rooks attributes"
-    def __init__(self, colour, pos, id):
-        super().__init__(PIECE_ROOK, colour, pos, 4, ["♖", "♜"], id)
+    def __init__(self, colour, pos):
+        super().__init__(PIECE_ROOK, colour, pos, 4, ["♖", "♜"])
 
     def find_possible_moves(self, board, pieces_to_jump=0):
         "find all possible moves for rook"
@@ -207,10 +210,10 @@ class Rook(Piece):
         )  # down
 
 
-class Bishop(Piece):
+class Bishop(ChessPiece):
     "subclass of Piece with bishop specific attributes"
-    def __init__(self, colour, pos, id):
-        super().__init__(PIECE_BISHOP, colour, pos, 3, ["♗", "♝"], id)
+    def __init__(self, colour, pos):
+        super().__init__(PIECE_BISHOP, colour, pos, 3, ["♗", "♝"])
 
     def find_possible_moves(self, board, pieces_to_jump=0):
         "Generate all possible moves for a bishop"
@@ -228,10 +231,10 @@ class Bishop(Piece):
         )  # down right
 
 
-class King(Piece):
+class King(ChessPiece):
     "Subclass of Piece with king attributes"
-    def __init__(self, colour, pos, id):
-        super().__init__(PIECE_KING, colour, pos, 10, ["♔", "♚"], id)
+    def __init__(self, colour, pos):
+        super().__init__(PIECE_KING, colour, pos, 10, ["♔", "♚"])
         self.check_moves = []
 
     def find_possible_moves(self, board, pieces_to_jump=0):
@@ -254,10 +257,10 @@ class King(Piece):
             self.possible_moves.append((self.row, self.column - 1))
 
 
-class Queen(Piece):
+class Queen(ChessPiece):
     "Sub class of game object with queen attributes"
-    def __init__(self, colour, pos, id):
-        super().__init__(PIECE_QUEEN, colour, pos, 9, ["♕", "♛"], id)
+    def __init__(self, colour, pos):
+        super().__init__(PIECE_QUEEN, colour, pos, 9, ["♕", "♛"])
 
     def find_possible_moves(self, board, pieces_to_jump=0):
         "The queen's possible moves is a combination of the rook and bishop"
@@ -287,10 +290,10 @@ class Queen(Piece):
         )  # down
 
 
-class Knight(Piece):
+class Knight(ChessPiece):
     "subclass of Piece with knight attributes"
-    def __init__(self, colour, pos, id):
-        super().__init__(PIECE_KNIGHT, colour, pos, 5, ["♘", "♞"], id)
+    def __init__(self, colour, pos):
+        super().__init__(PIECE_KNIGHT, colour, pos, 5, ["♘", "♞"])
 
     def find_possible_moves(self, board, pieces_to_jump=0):
         "finds all possible moves for the knight"

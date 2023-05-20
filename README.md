@@ -51,4 +51,13 @@ snakeviz test_perm.prof
 
 git checkout 0eecccf
 git difftool --gui 0eecccf:ChessGame/Pieces.py master:src/chess_pieces.py
+
+## notation workings
+```
+    def get_square_notation(self, row, col) -> str:
+        """Return algebraic notation for given row, col"""
+        if row >= 0 and row < 8 and col >= 0 and col < 8:
+            return f"{chr(ord('a') + col)}{8 - row}"
+        return None
+        # awnser = messagebox("Roar!", "Double roar!", info=True, buttons=("Yes", "No", "Don't know"), return_button=0, escape_button=1)
 ```

@@ -1,11 +1,20 @@
-def index_2d(array, index) -> int:
-    "convert index of flattened array to 2D array"
-    return (index // len(array), index % len(array[0]))
-def index_1d(array, index) -> int:
-    "convert index of 2D array to flattened array"
-    return index[0] * len(array[0]) + index[1]
+class Parent():
+    def __new__(cls: object, feature):
+        subclass_map = {subclass.feature: subclass for subclass in cls.__subclasses__()}
+        subclass = subclass_map[feature]
+        instance = super(Parent, subclass).__new__(subclass)
+        return instance
 
-a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-a_flat = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-print(index_2d(a, index_1d(a, (1, 1))))
-print(index_1d(a, index_2d(a, (1, 1))))
+class Child1(Parent):
+    def __init__(self) -> None:
+        super().__init__()
+        self.feature = 1
+
+class Child2(Parent):
+    def __init__(self) -> None:
+        super().__init__()
+        self.feature = 2
+
+
+type(Parent(1))  # <class '__main__.Child1'>
+type(Parent(2))  # <class '__main__.Child2'>

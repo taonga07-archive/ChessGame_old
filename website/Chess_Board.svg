@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect id="a1" class="black_square" width="25" height="25" y="175" zIndex="0" />
+  <rect id="a2" class="white_square" width="25" height="25" y="150" zIndex="0" />
+  <rect id="a3" class="black_square" width="25" height="25" y="125" zIndex="0" />
+  <rect id="a4" class="white_square" width="25" height="25" y="100" zIndex="0" />
+  <rect id="a5" class="black_square" width="25" height="25" y="75" zIndex="0" />
+  <rect id="a6" class="white_square" width="25" height="25" y="50" zIndex="0" />
+  <rect id="a7" class="black_square" width="25" height="25" y="25" zIndex="0" />
+  <rect id="a8" class="white_square" width="25" height="25" zIndex="0" />
+  <rect id="b1" class="white_square" width="25" height="25" x="25" y="175" zIndex="0" />
+  <rect id="b2" class="black_square" width="25" height="25" y="150" x="25" zIndex="0" />
+  <rect id="b3" class="white_square" width="25" height="25" y="125" x="25" zIndex="0" />
+  <rect id="b4" class="black_square" width="25" height="25" y="100" x="25" zIndex="0" />
+  <rect id="b5" class="white_square" width="25" height="25" y="75" x="25" zIndex="0" />
+  <rect id="b6" class="black_square" width="25" height="25" y="50" x="25" zIndex="0" />
+  <rect id="b7" class="white_square" width="25" height="25" y="25" x="25" zIndex="0" />
+  <rect id="b8" class="black_square" width="25" height="25" x="25" zIndex="0" />
+  <rect id="c1" class="black_square" width="25" height="25" y="175" x="50" zIndex="0" />
+  <rect id="c2" class="white_square" width="25" height="25" y="150" x="50" zIndex="0" />
+  <rect id="c3" class="black_square" width="25" height="25" y="125" x="50" zIndex="0" />
+  <rect id="c4" class="white_square" width="25" height="25" y="100" x="50" zIndex="0" />
+  <rect id="c5" class="black_square" width="25" height="25" y="75" x="50" zIndex="0" />
+  <rect id="c6" class="white_square" width="25" height="25" y="50" x="50" zIndex="0" />
+  <rect id="c7" class="black_square" width="25" height="25" y="25" x="50" zIndex="0" />
+  <rect id="c8" class="white_square" width="25" height="25" x="50" zIndex="0" />
+  <rect id="d1" class="white_square" width="25" height="25" x="75" y="175" zIndex="0" />
+  <rect id="d2" class="black_square" width="25" height="25" y="150" x="75" zIndex="0" />
+  <rect id="d3" class="white_square" width="25" height="25" y="125" x="75" zIndex="0" />
+  <rect id="d4" class="black_square" width="25" height="25" y="100" x="75" zIndex="0" />
+  <rect id="d5" class="white_square" width="25" height="25" y="75" x="75" zIndex="0" />
+  <rect id="d6" class="black_square" width="25" height="25" y="50" x="75" zIndex="0" />
+  <rect id="d7" class="white_square" width="25" height="25" y="25" x="75" zIndex="0" />
+  <rect id="d8" class="black_square" width="25" height="25" x="75" zIndex="0" />
+  <rect id="e1" class="black_square" width="25" height="25" y="175" x="100" zIndex="0" />
+  <rect id="e2" class="white_square" width="25" height="25" y="150" x="100" zIndex="0" />
+  <rect id="e3" class="black_square" width="25" height="25" y="125" x="100" zIndex="0" />
+  <rect id="e4" class="white_square" width="25" height="25" y="100" x="100" zIndex="0" />
+  <rect id="e5" class="black_square" width="25" height="25" y="75" x="100" zIndex="0" />
+  <rect id="e6" class="white_square" width="25" height="25" y="50" x="100" zIndex="0" />
+  <rect id="e7" class="black_square" width="25" height="25" y="25" x="100" zIndex="0" />
+  <rect id="e8" class="white_square" width="25" height="25" x="100" zIndex="0" />
+  <rect id="f1" class="white_square" width="25" height="25" x="125" y="175" zIndex="0" />
+  <rect id="f2" class="black_square" width="25" height="25" y="150" x="125" zIndex="0" />
+  <rect id="f3" class="white_square" width="25" height="25" y="125" x="125" zIndex="0" />
+  <rect id="f4" class="black_square" width="25" height="25" y="100" x="125" zIndex="0" />
+  <rect id="f5" class="white_square" width="25" height="25" y="75" x="125" zIndex="0" />
+  <rect id="f6" class="black_square" width="25" height="25" y="50" x="125" zIndex="0" />
+  <rect id="f7" class="white_square" width="25" height="25" y="25" x="125" zIndex="0" />
+  <rect id="f8" class="black_square" width="25" height="25" x="125" zIndex="0" />
+  <rect id="g1" class="black_square" width="25" height="25" y="175" x="150" zIndex="0" />
+  <rect id="g2" class="white_square" width="25" height="25" y="150" x="150" zIndex="0" />
+  <rect id="g3" class="black_square" width="25" height="25" y="125" x="150" zIndex="0" />
+  <rect id="g4" class="white_square" width="25" height="25" y="100" x="150" zIndex="0" />
+  <rect id="g5" class="black_square" width="25" height="25" y="75" x="150" zIndex="0" />
+  <rect id="g6" class="white_square" width="25" height="25" y="50" x="150" zIndex="0" />
+  <rect id="g7" class="black_square" width="25" height="25" y="25" x="150" zIndex="0" />
+  <rect id="g8" class="white_square" width="25" height="25" x="150" zIndex="0" />
+  <rect id="h1" class="white_square" width="25" height="25" x="175" y="175" zIndex="0" />
+  <rect id="h2" class="black_square" width="25" height="25" y="150" x="175" zIndex="0" />
+  <rect id="h3" class="white_square" width="25" height="25" y="125" x="175" zIndex="0" />
+  <rect id="h4" class="black_square" width="25" height="25" y="100" x="175" zIndex="0" />
+  <rect id="h5" class="white_square" width="25" height="25" y="75" x="175" zIndex="0" />
+  <rect id="h6" class="black_square" width="25" height="25" y="50" x="175" zIndex="0" />
+  <rect id="h7" class="white_square" width="25" height="25" y="25" x="175" zIndex="0" />
+  <rect id="h8" class="black_square" width="25" height="25" x="175" zIndex="0" />
+</svg>

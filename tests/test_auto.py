@@ -1,4 +1,9 @@
-from ChessGame import Headless_ChessGame, ChessErrs, ChessExc, CheckMateExc, RandomMove, random_auto_move
+from sys import path as sys_path
+sys_path.append('../src')
+
+from chess_api import ChessAPI, ChessExc, InvMoveExc, InvColourExc, CheckExc, CheckMateExc, ChessErrs
+from sunfish_interface import SunFishModel, board_to_sunfish, sunfish_auto_move
+from calculate_move import RandomMove, random_auto_move
 
 '''
 coverage run test_auto.py
@@ -121,10 +126,9 @@ def test5(perm=RandomMove.perm_all, testname='test5'):
     test4(game=Headless_ChessGame(file=None), perm=perm, testname=testname)
 
 def test7(game=Headless_ChessGame(), testname="test7", max_index=10):
-    index=0
     checkmate_flag = False
     perm_rand = (1 << RandomMove.PERM_SEMI_RANDOM_BIT)
-    while True:
+    for index in range(max_index):
         colour = game.get_turn_colour()
         perm = RandomMove.perm_notlook if colour == 'white' else perm_rand  # white take and dodge; black is random
         _move = random_auto_move(game, perm)
@@ -139,18 +143,3 @@ def test7(game=Headless_ChessGame(), testname="test7", max_index=10):
             print(f"{testname} checkmate move {index} {colour} takes {taken}")
             checkmate_flag = True
             # break # DBG allow to play next move to check exception raised
-
-        if index > max_index:
-            break
-        index = index+1
-
-
-if __name__ == "__main__":
-    # invoked by python and not pytest
-    test1()
-    test2()
-    test3()
-    test4()
-    test5()
-    test7()
-    pass
